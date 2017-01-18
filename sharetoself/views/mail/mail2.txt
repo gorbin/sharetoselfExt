@@ -1,0 +1,12 @@
+** ShareToSelf verification
+------------------------------------------------------------
+** Start Sending Emails to self
+------------------------------------------------------------
+
+To complete your verification, please confirm your email address by using this link:
+
+%link%
+
+If you haven't register email in ShareToSelf chrome extensions, please ignore this email.
+
+© 2016 Gorbin (https://github.com/gorbin)

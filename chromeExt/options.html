@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <link href="./img/logoicon.png" rel="icon" type="image/png">
+    <title>ShareToSelf extension options</title>
+    <meta content="" name="description">
+    <meta content="chrome=1" http-equiv="X-UA-Compatible">
+    <link href="./css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="./css/stylesOptions.css" rel="stylesheet" type="text/css">
+</head>
+<body id="home">
+
+<section class="header1">
+    <div class="wrapper topSection" id="Content">
+        <div id="Header">
+            <div class="wrapper">
+                <div class="logo">
+                    <h1><img src="./img/logoicon.png">ShareToSelf
+                        <span class="options">options</span></h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="main">
+    <div class="option-row">
+        <div class="option-group" id="subject-prefix">
+            Subject prefix
+        </div>
+        <div class="option-values">
+            <div class="value">
+                <form id="prefix-form">
+                    <input id="prefix" type="textarea">
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <div class="option-row">
+        <div class="option-group" id="email-label">
+            Email
+        </div>
+        <div class="option-values">
+            <div class="value">
+                <form id="email-form">
+                    <input id="email" required="required" type="email">
+                </form>
+            </div>
+            <!--<button id="add">Add</button>-->
+            <br><div class="type"><input type="checkbox" class="checkbox" id="checkemail"/> Enable share to Email</div>
+        </div>
+    </div>
+    <div class="option-row">
+        <div class="option-group">
+            Facebook
+        </div>
+        <div class="option-values">
+            <div class="value1">
+                <div class="type"><input type="checkbox" class="checkbox" id="checkfb"/> Enable share to Facebook</div><br>
+                <br>
+                <!--<div class="network">-->
+                    <div class="fb-send-to-messenger" id="fbinit"
+                         messenger_app_id="1746289228945988"
+                         page_id="1844910905730586"
+                         data-ref="PASS_THROUGH_PARAM"
+                         color="white"
+                         size="large">
+                    </div>
+                <!--</div>-->
+            </div>
+        </div>
+
+    </div>
+    <div class="option-row">
+        <div class="option-group">
+            Slack
+        </div>
+        <div class="option-values">
+            <div class="value">
+                <div class="type"><input type="checkbox" class="checkbox" id="checkslack"/> Enable share to Slack</div>
+                <br><br>
+                <div class="network">
+                    <a href="https://slack.com/oauth/authorize?scope=incoming-webhook,bot&client_id=2243620212.87255959762">
+                        <img alt="Add to Slack" height="40" width="139"
+                             src="https://platform.slack-edge.com/img/add_to_slack.png"
+                             srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x"/>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="end">
+        <button class="submit" id="save">Save</button>
+    </div>
+</section>
+<span class="bottomBlock">© 2016 <a href="https://github.com/gorbin">Gorbin</a></span> <!--Scripts-->
+<script src="options.js"></script>
+<script src="utils.js"></script>
+<script src="jquery-1.9.1.min.js"></script>
+
+</body>
+</html>
