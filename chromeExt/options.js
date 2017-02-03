@@ -110,6 +110,8 @@ function setStatus(d, error) {
 document.addEventListener('DOMContentLoaded', fbinit);
 
 document.addEventListener('DOMContentLoaded', restore_options);
+document.addEventListener('DOMContentLoaded', slackInit);
+
 document.getElementById('save').addEventListener('click', save_options);
 
 function fbinit() {
@@ -132,4 +134,9 @@ function fbinit() {
         js.src = "https://connect.facebook.net/en_US/sdk.js";
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
+}
+
+function slackInit(){
+        document.getElementById('slackLink')
+            .setAttribute("href", 'https://slack.com/oauth/authorize?scope=bot&client_id=2243620212.87255959762&state='+chrome.runtime.id);
 }
