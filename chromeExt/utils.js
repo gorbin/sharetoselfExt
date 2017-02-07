@@ -87,6 +87,43 @@ function sendUrlFB(link, title, type, fb, callback, errorCallback) {
 
 }
 
+function sendUrlSlack(link, title, type, callback, errorCallback) {
+    var req = new XMLHttpRequest();
+    var url = "https://sharetoself.com/slack/send";
+    var params = "link=" + link + "&title=" + title + "&id=" + chrome.runtime.id;
+
+    req.onreadystatechange = function () {
+        try {
+            if (req.readyState == 4) {
+                if (req.status == 200) {
+                    clearServerError();
+                    if (req.responseText.indexOf('true') !== -1) {
+                        callback("Sent successfully!");
+                    } else if (req.responseText === 'IDENTIFY') {
+                        errorCallback('Error: Identify yourself in options!');
+                    } else if (req.responseText === 'VERIFY') {
+                        errorCallback('Error: Verify your email!');
+                    } else {
+                        setServerError(req.responseText);
+                        errorCallback('Error: Connect with developer!');
+                    }
+                } else {
+                    setServerError(req.status + ' ' + req.responseText);
+                    errorCallback('Error: Try again later or connect with developer.');
+                }
+            }
+        }
+        catch (e) {
+            errorCallback('Error, check your connection!');
+        }
+    };
+
+    req.open("POST", url, true);
+    req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    req.send(params);
+
+}
+
 function getSender(callback) {
     chrome.storage.sync.get({
         email: '',

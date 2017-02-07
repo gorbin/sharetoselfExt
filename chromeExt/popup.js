@@ -13,7 +13,7 @@ function getCurrentTabUrl(callback) {
 }
 
 function renderStatus(statusText, error) {
-    if(error){
+    if (error) {
         document.getElementById('status').setAttribute('class', 'error');
     }
     document.getElementById('status').textContent = statusText;
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
         renderStatus('Sending: ' + title, false);
 
         getSender(function (email, prefix, types, fb) {
-            if(types['checkemail']) {
+            if (types['checkemail']) {
                 if (email) {
                     sendUrlEmail(url, prefix + " " + title, email,
                         function (message) {
@@ -36,17 +36,26 @@ document.addEventListener('DOMContentLoaded', function () {
                     renderStatus("Error: Set email in options.", true);
                 }
             }
-            if(types['checkfb']) {
+            if (types['checkfb']) {
                 // if (fb) {
-                    sendUrlFB(url, prefix + " " + title, types['checkfb'], fb,
-                        function (message) {
-                            renderStatus(message, false);
-                        }, function (errorMessage) {
-                            renderStatus(errorMessage, true);
-                        });
+                sendUrlFB(url, prefix + " " + title, types['checkfb'], fb,
+                    function (message) {
+                        renderStatus(message, false);
+                    }, function (errorMessage) {
+                        renderStatus(errorMessage, true);
+                    });
                 // } else {
                 //     renderStatus("Error: Set fb in options.", true);
                 // }
+            }
+
+            if (types['checkslack']) {
+                sendUrlSlack(url, prefix + " " + title, types['checkslack'],
+                    function (message) {
+                        renderStatus(message, false);
+                    }, function (errorMessage) {
+                        renderStatus(errorMessage, true);
+                    });
             }
         });
     });

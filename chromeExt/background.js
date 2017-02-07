@@ -91,8 +91,17 @@ function prepareData(info, tab) {
                             statusMessageHide(errorMessage, tab, true);
                         });
                 } else {
-                    statusMessage("Error: Set email in options.", tab, true);
+                    statusMessage("Error: Set fb in options.", tab, true);
                 }
+            }
+            if(types['checkslack']) {
+                    statusMessageShow("Sending " + prefix + " " + title, tab, false);
+                    sendUrlSlack(content, prefix + " " + title, types['checkSlack'],
+                        function (message) {
+                            statusMessageHide(message, tab, false);
+                        }, function (errorMessage) {
+                            statusMessageHide(errorMessage, tab, true);
+                        });
             }
         });
     }

@@ -55,30 +55,59 @@ class SlackController extends ActiveController
 
     public function actionWebhook()
     {
-        if (!empty($_REQUEST['code']) && !empty($_REQUEST['state'])) {
-            $code = $_REQUEST['code'];
-            $uid = $_REQUEST['state'];
-            $model = Slack::findOne(array(
-                'uid' => $uid,
-            ));
-            if (!$model) $model = new Slack();
-            $model->uid = $uid;
-            $model->code = $code;
+        $this->layout = "clean2";
+        $callbackString = 'If you got problems - contact with us: 
+                  <a href="mailto:service@sharetoself.com&subject=Wrong%20activation%20code">service@sharetoself.com</a> ';
 
-            $this->getToken($_REQUEST['code'], $model);
+        if(empty($_REQUEST['error'])) {
+            if (!empty($_REQUEST['code']) && !empty($_REQUEST['state'])) {
+                $code = $_REQUEST['code'];
+                $uid = $_REQUEST['state'];
+                $model = Slack::findOne(array(
+                    'uid' => $uid,
+                ));
+                if (!$model) $model = new Slack();
+                $model->uid = $uid;
+                $model->code = $code;
+
+                $this->getToken($_REQUEST['code'], $model);
+            }
+
+            return $this->render('verification');
+        } else {
+            $error = 'Sorry about that. Unfortunately we got error or you just cancel authorization. Contact with us!' . $callbackString;
+            return $this->render('error', [
+                'error' => $error,
+            ]);
         }
-
     }
 
     public function actionSend()
     {
-        $this->sendMessage("Test message - user - asUser", "xoxb-135846982019-oPb3hNZFlh0dbMgwznpkcTF1", "U0275J86C");
+        if (!empty($_POST)) {
+            $id = $_POST['id'];
+            $url = $_POST['link'];
+            $title = $_POST['title'];
+
+            if (!empty($id)) {
+                $model = Slack::findOne(['uid' => $id]);
+                if ($model) {
+                    $slack = $model->bot_access_token;
+                }
+                $this->sendMessage($title . ': ' . $url, $model->bot_access_token, $model->user_id);
+                echo 'true:';
+            } else {
+                echo 'IDENTIFY';
+            }
+
+        }
     }
 
-    public function getToken($code, $model){
-        $postfields = array('client_id'=>'2243620212.87255959762',
-                            'client_secret'=>'223369ae88f5f391e9735511df047a7d',
-                            'code'=>$code);
+    public function getToken($code, $model)
+    {
+        $postfields = array('client_id' => '2243620212.87255959762',
+            'client_secret' => '223369ae88f5f391e9735511df047a7d',
+            'code' => $code);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, 'https://slack.com/api/oauth.access');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -100,8 +129,9 @@ class SlackController extends ActiveController
 
     }
 
-    public function sendMessage($message, $token, $channel){
-        $postfields = array("token"=>$token, "channel" => $channel, "text"=>$message, "as_user"=>true);
+    public function sendMessage($message, $token, $channel)
+    {
+        $postfields = array("token" => $token, "channel" => $channel, "text" => $message, "as_user" => true);
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, "https://slack.com/api/chat.postMessage");

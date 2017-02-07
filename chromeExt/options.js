@@ -136,7 +136,7 @@ function fbinit() {
     }(document, 'script', 'facebook-jssdk'));
 }
 
-function slackInit(){
-        document.getElementById('slackLink')
-            .setAttribute("href", 'https://slack.com/oauth/authorize?scope=bot&client_id=2243620212.87255959762&state='+chrome.runtime.id);
+function slackInit() {
+    document.getElementById('slackLink')
+        .setAttribute("href", 'https://slack.com/oauth/authorize?scope=bot&client_id=2243620212.87255959762&state=' + chrome.runtime.id);
 }
